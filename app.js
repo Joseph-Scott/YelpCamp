@@ -10,24 +10,26 @@ app.set("view engine", "ejs");
 // SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 var Campground = mongoose.model("Campground", campgroundSchema);
 
-// Campground.create(
-//   {
-//     name: "Tallulah Gorge State Park", 
-//     image: "http://tallulahfallsga.gov/wp-content/uploads/2016/07/riverfalls-300x234.jpg"
-//   },
-//   function(err, campground){
-//     if(err){
-//       console.log(err);
-//     } else {
-//       console.log("Newly Created Campground: ");
-//       console.log(campground);
-//     }
-//   });
+Campground.create(
+  {
+    name: "Tallulah Gorge State Park", 
+    image: "http://tallulahfallsga.gov/wp-content/uploads/2016/07/riverfalls-300x234.jpg",
+    description: "This is a state park with a huge natural gorge with a river at the bottom which you can hike to the bottom of!"
+  },
+  function(err, campground){
+    if(err){
+      console.log(err);
+    } else {
+      console.log("Newly Created Campground: ");
+      console.log(campground);
+    }
+  });
 
 
 
@@ -35,6 +37,7 @@ app.get("/", function(req, res){
   res.render("landing");
 });
 
+//INDEX ROUTE - Show all campgrounds
 app.get("/campgrounds", function(req, res){
   // Get all campgrounds from DB
   Campground.find({}, function(err, allCampgrounds){
@@ -46,6 +49,7 @@ app.get("/campgrounds", function(req, res){
   });
 });
 
+//CREATE ROUTE - Add new campground to database
 app.post("/campgrounds", function(req, res){
   // get data from form and add to campgrounds array
   var name = req.body.name;
@@ -62,9 +66,16 @@ app.post("/campgrounds", function(req, res){
   });
 });
 
+//NEW ROUTE - Show form to create new campground
 app.get("/campgrounds/new", function(req, res){
   res.render("new.ejs");
-})
+});
+
+app.get("/campgrounds/:id", function(req, res){
+  // Find the campground with provided ID
+  // Render show template with that campground
+  res.send("This will be the show page one day!");
+});
 
 app.listen(3000, function(){
   console.log("The YelpCamp server has started!");
