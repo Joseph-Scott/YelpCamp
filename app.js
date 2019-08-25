@@ -16,20 +16,20 @@ var campgroundSchema = new mongoose.Schema({
 
 var Campground = mongoose.model("Campground", campgroundSchema);
 
-Campground.create(
-  {
-    name: "Tallulah Gorge State Park", 
-    image: "http://tallulahfallsga.gov/wp-content/uploads/2016/07/riverfalls-300x234.jpg",
-    description: "This is a state park with a huge natural gorge with a river at the bottom which you can hike to the bottom of!"
-  },
-  function(err, campground){
-    if(err){
-      console.log(err);
-    } else {
-      console.log("Newly Created Campground: ");
-      console.log(campground);
-    }
-  });
+// Campground.create(
+//   {
+//     name: "Tallulah Gorge State Park", 
+//     image: "http://tallulahfallsga.gov/wp-content/uploads/2016/07/riverfalls-300x234.jpg",
+//     description: "This is a state park with a huge natural gorge with a river at the bottom which you can hike to the bottom of!"
+//   },
+//   function(err, campground){
+//     if(err){
+//       console.log(err);
+//     } else {
+//       console.log("Newly Created Campground: ");
+//       console.log(campground);
+//     }
+//   });
 
 
 
@@ -44,7 +44,7 @@ app.get("/campgrounds", function(req, res){
     if(err){
       console.log(err);
     } else {
-      res.render("campgrounds", {campgrounds:allCampgrounds});
+      res.render("index", {campgrounds:allCampgrounds});
     }
   });
 });
@@ -71,10 +71,11 @@ app.get("/campgrounds/new", function(req, res){
   res.render("new.ejs");
 });
 
+//SHOW ROUTE - Shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
   // Find the campground with provided ID
   // Render show template with that campground
-  res.send("This will be the show page one day!");
+  res.render("show");
 });
 
 app.listen(3000, function(){
