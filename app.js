@@ -10,24 +10,6 @@ mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-
-// Campground.create(
-//   {
-//     name: "Tallulah Gorge State Park", 
-//     image: "http://tallulahfallsga.gov/wp-content/uploads/2016/07/riverfalls-300x234.jpg",
-//     description: "This is a state park with a huge natural gorge with a river at the bottom which you can hike to the bottom of!"
-//   },
-//   function(err, campground){
-//     if(err){
-//       console.log(err);
-//     } else {
-//       console.log("Newly Created Campground: ");
-//       console.log(campground);
-//     }
-//   });
-
-
-
 app.get("/", function(req, res){
   res.render("landing");
 });
@@ -70,7 +52,7 @@ app.get("/campgrounds/new", function(req, res){
 //SHOW ROUTE - Shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
   // Find the campground with provided ID
-  Campground.findById(req.params.id, function(err, foundCampground){
+  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
     if(err){
       console.log(err);
     } else {
