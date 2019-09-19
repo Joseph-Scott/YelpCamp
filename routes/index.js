@@ -29,7 +29,7 @@ router.post("/register", function(req, res){
 
 // Show login form
 router.get("/login", function(req, res){
-  res.render("login");
+  res.render("login", {message: req.flash("error")});
 });
 
 // Handling login logic
@@ -51,6 +51,7 @@ function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next();
   }
+  req.flash("error", "Please Login First!");
   res.redirect("/login");
 }
 
