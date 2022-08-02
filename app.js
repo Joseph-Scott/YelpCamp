@@ -24,8 +24,8 @@ db.once("open", () => {
 
 const app = express();
 
-
 app.engine('ejs', ejsMate);
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -43,6 +43,7 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }
+
 app.use(session(sessionConfig));
 app.use(flash());
 
@@ -60,12 +61,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
-
-app.get('/fakeUser', async (req, res) => {
-  const user = new User({ email: 'joeeee@gmail.com', username: 'joeee'});
-  const newUser = await User.register(user, 'chicken');
-  res.send(newUser);
-})
 
 app.use('/', userRoutes);
 app.use('/campgrounds', campgroundRoutes);
